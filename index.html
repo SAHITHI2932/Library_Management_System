@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="./style.css">
+   
+</head>
+<body>
+   
+<div class="container">
+    <h1>Library Management System</h1>
+    <div class="library from">
+       
+        <input type="text" id="Title"placeholder="Title">
+       
+        <input type="text" id="Author"placeholder="Author">
+        
+        <input type="number" id="Pages"placeholder="Pages">
+       
+        <input type="text" id="Genre"placeholder="Genre">
+
+        <button onclick="AddBook()"> Add Book </button>
+
+    </div>
+
+    <div class="Search">
+        <input type="text" id="SearchTitle" placeholder="Search by Title">
+        <button onclick="SearchBooks()">Search</button>
+    </div>
+
+    <div class="BookList">
+       
+    </div>
+</div>
+<script>
+     let library=[];
+    function AddBook(){
+        let Title=document.getElementById("Title").value;
+        let Author=document.getElementById("Author").value;
+        let Pages=document.getElementById("Pages").value;
+        let Genre=document.getElementById("Genre").value;
+
+        if(Title && Author && Pages && Genre){
+            let book={
+                Title:Title,
+                Author:Author,
+                Pages: Pages,
+                Genre: Genre
+            };
+
+            library.push(book);
+            displayBooks();
+        }
+        else{
+            alert("Please fill all the fields");
+        }
+    }
+    function SearchBooks(){
+        let SearchTitle=document.getElementById("SearchTitle").value.toLowerCase();
+        let SearchResult=library.filter(book => book.Title.includes(SearchTitle));
+        displayBooks(SearchResult);
+    }
+
+    function displayBooks(books=library){
+        let BookList=document.querySelector('.BookList');
+        BookList.innerHTML='';
+       
+      
+
+    books.forEach(book => {
+    let bookDiv = document.createElement('div');
+    bookDiv.classList.add('book');
+    bookDiv.innerHTML = `
+        <h3>${book.Title}</h3>
+        <p>Author: ${book.Author}</p>
+        <p>Pages: ${book.Pages}</p>
+        <p>Genre: ${book.Genre}</p>
+    `;
+    BookList.appendChild(bookDiv);
+});
+    }
+
+</script>
+
+    
+</body>
+</html>
